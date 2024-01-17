@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\Technology;
 
 class ProjectController extends Controller
 {
@@ -39,7 +40,8 @@ class ProjectController extends Controller
     {
         $categories = Category::all();
         $technologies = config('technologies.key');
-        return view('admin.projects.create', compact('categories', 'technologies'));
+        $technologies_ = Technology::all();
+        return view('admin.projects.create', compact('categories', 'technologies', 'technologies_'));
     }
 
     /**
@@ -60,6 +62,10 @@ class ProjectController extends Controller
 
         if($request->input('technologies')){
             $formData['technologies'] = implode(',', $request->input('technologies'));
+        }
+
+        if($request->has('technologies_')){
+            $project->technologies()->attach($request->technologies_);
         }
 
         Project::create($formData);

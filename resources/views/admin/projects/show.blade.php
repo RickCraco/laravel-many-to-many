@@ -17,6 +17,14 @@
 
                     @endif
                 @endfor
+
+               
+                @forelse($project->technologies as $technology)
+                    <p>{{ $technology->name }}</p>
+                    @empty
+                    <p>No technologies</p>
+                @endforelse
+
                 <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-danger">Edit</a>
                 <a href="{{ route('admin.projects.index') }}" class="btn btn-danger">Back</a>
             </div>
