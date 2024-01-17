@@ -42,9 +42,18 @@
     </div>
 
     <div class="mb-3 text-white">
-            @foreach ($technologies as $technology)
-                <input type="checkbox"class="mx-2 @error('technologies') is-invalid @enderror" name="technologies[]" id="technologies" value="{{ $technology['icon'] }}" @if (isset($technologies) && str_contains($project->technologies, $technology['icon'])) checked @endif>
-                <label for="technologies">{{ $technology['name'] }} <i class="{{ $technology['icon'] }}"></i></label>
+    @foreach ($technologies as $item)
+                <div class="d-inline-block m-3 @error('technologies') is-invalid @enderror">
+                    @if ($errors->any())
+                        <input type="checkbox" name="technologies[]" value="{{ $item->id }}"
+                            @if (isset($technologies) && in_array($item->id, old('technologies', $project->technologies))) checked @endif>
+                    @else
+                        <input type="checkbox" name="technologies[]" value="{{ $item->id }}"
+                            @if (isset($technologies) && $project->technologies->contains($item->id)) checked @endif>
+                    @endif
+
+                    <label for="technologies">{{ $item->name }} <i class="{{ $item->icon }}"></i></label>
+                </div>
             @endforeach
             @error('technologies')
                 <div class="invalid-feedback">{{ $message }}</div>

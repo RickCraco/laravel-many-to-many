@@ -41,20 +41,10 @@
 
     <div class="mb-3 text-white">
             @foreach ($technologies as $technology)
-                <input type="checkbox" class="mx-2 @error('technologies') is-invalid @enderror" name="technologies[]" id="technologies" value="{{ $technology['icon'] }}">
-                <label for="technologies">{{ $technology['name'] }} <i class="{{ $technology['icon'] }}"></i></label>
+                <input type="checkbox" class="mx-2 @error('technologies') is-invalid @enderror" name="technologies[]" id="technologies" value="{{ $technology->id }}" {{in_array($technology->id, old('technologies', [])), old('technologies', []) ? 'checked' : ''}}>
+                <label for="technologies">{{ $technology->name }} <i class="{{ $technology->icon }}"></i></label>
             @endforeach
             @error('technologies')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-    </div>
-
-    <div class="mb-3 text-white">
-            @foreach ($technologies_ as $technology)
-                <input type="checkbox" class="mx-2 @error('technologies_') is-invalid @enderror" name="technologies_[]" id="technologies_" value="{{ $technology->id }}" {{in_array($technology->id, old('technologies_', [])), old('technologies_', []) ? 'checked' : ''}}>
-                <label for="technologies_">{{ $technology->name }}</label>
-            @endforeach
-            @error('technologies_')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
     </div>

@@ -39,9 +39,9 @@ class ProjectController extends Controller
     public function create()
     {
         $categories = Category::all();
-        $technologies = config('technologies.key');
-        $technologies_ = Technology::all();
-        return view('admin.projects.create', compact('categories', 'technologies', 'technologies_'));
+        //$technologies = config('technologies.key');
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('categories', 'technologies'));
     }
 
     /**
@@ -59,16 +59,17 @@ class ProjectController extends Controller
             $path = Storage::put('uploads', $request->file('img'));
             $formData['img'] = $path;
         }
-
+        /*
         if($request->input('technologies')){
             $formData['technologies'] = implode(',', $request->input('technologies'));
+        } */
+
+        $project = Project::create($formData);
+
+        if($request->has('technologies')){
+            $project->technologies()->attach($request->technologies);
         }
 
-        if($request->has('technologies_')){
-            $project->technologies()->attach($request->technologies_);
-        }
-
-        Project::create($formData);
         return redirect()->route('admin.projects.index');
     }
 
@@ -77,7 +78,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $project->technologies = explode(',', $project->technologies);
+        //$project->technologies = explode(',', $project->technologies);
         return view('admin.projects.show', compact('project'));
     }
 
@@ -87,7 +88,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $categories = Category::all();
-        $technologies = config('technologies.key');
+        //$technologies = config('technologies.key');
+        $technologies = Technology::all();
         return view('admin.projects.edit', compact('project', 'categories', 'technologies'));
     }
 
@@ -108,14 +110,21 @@ class ProjectController extends Controller
             $path = Storage::put('uploads', $request->file('img'));
             $formData['img'] = $path;
         }
-
+        /*
         if($request->input('technologies')){
             $formData['technologies'] = implode(',', $request->input('technologies'));
         }else{
             $formData['technologies'] = '';
-        }
+        } */
 
         $project->update($formData);
+
+        if($request->has('technologies')){
+            $project->technologies()->sync($request->technologies);
+        }else{
+            $project->technologies()->detach();
+        }
+
         return to_route('admin.projects.show', $project);
     }
 
@@ -127,6 +136,8 @@ class ProjectController extends Controller
         if($project->img){
             Storage::delete($project->img);
         }
+
+        $project->technologies()->detach();
 
         $project->delete();
         return to_route('admin.projects.index')->with('message', "Project $project->title deleted");

@@ -8,19 +8,9 @@
                 <h5 class="card-title">{{ $project->title }}</h5>
                 <p class="card-text">{{ $project->body }}</p>
                 <p>{{$project->category ? $project->category->name : 'Uncategorized'}}</p>
-                @for($i = 0; $i < count($project->technologies); $i++)
-                    @if($project->technologies[0] !== '')
-                        <div><i class="fa-solid {{ $project->technologies[$i]}}"></i></div>
-                    @else
-
-                    <p>No technologies</p>
-
-                    @endif
-                @endfor
-
-               
+                
                 @forelse($project->technologies as $technology)
-                    <p>{{ $technology->name }}</p>
+                    <p>{{ $technology->name }} <i class="{{ $technology->icon }}"></i></p>
                     @empty
                     <p>No technologies</p>
                 @endforelse
