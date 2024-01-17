@@ -20,7 +20,7 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        $technologies = config('technologies.key');
+        $technologies = Technology::all();
 
         if($request->query('technologies')){
             $projects = Project::where('technologies', 'like', '%' . $request->query('technologies') . '%')->get();

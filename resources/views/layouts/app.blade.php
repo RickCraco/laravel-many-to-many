@@ -44,6 +44,8 @@
                                 action="{{ route('admin.projects.index') }}"
                             @elseif(Route::currentRouteName() == 'admin.categories.index')
                             action="{{ route('admin.categories.index') }}"
+                            @elseif(Route::currentRouteName() == 'admin.technologies.index')
+                            action="{{ route('admin.technologies.index') }}"
                             @endif
                         method="GET">
 

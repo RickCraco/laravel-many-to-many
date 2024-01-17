@@ -7,15 +7,21 @@ use App\Http\Requests\StoreTechnologyRequest;
 use App\Http\Requests\UpdateTechnologyRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class TechnologyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $technologies = Technology::all();
+        if($request->query('search')){
+            $technologies = Technology::where('name', 'like', '%' . $request->query('search') . '%')->get();
+        }else{
+            $technologies = Technology::all();
+        }
+
         return view('admin.technologies.index', compact('technologies'));
     }
 
