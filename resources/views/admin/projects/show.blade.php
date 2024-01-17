@@ -7,12 +7,16 @@
             <div class="card-body">
                 <h5 class="card-title">{{ $project->title }}</h5>
                 <p class="card-text">{{ $project->body }}</p>
-                <p>{{$project->category ? $project->category->name : 'Uncategorized'}}</p>
+
+                <p>Project category : </p>
+                <p class="text-danger">{{$project->category ? $project->category->name : 'Uncategorized'}}</p>
                 
+
+                <p>Project technologies : </p>
                 @forelse($project->technologies as $technology)
                     <p>{{ $technology->name }} <i class="{{ $technology->icon }}"></i></p>
                     @empty
-                    <p>No technologies</p>
+                    <p class="text-danger">No technologies</p>
                 @endforelse
 
                 <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-danger">Edit</a>
