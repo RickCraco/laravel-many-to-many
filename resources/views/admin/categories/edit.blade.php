@@ -16,6 +16,7 @@
 
     <button type="submit" class="btn btn-success">Save</button>
     <button type="reset" class="btn btn-primary">Reset</button>
+    <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">Back</a>
 
         </form>
     </section>

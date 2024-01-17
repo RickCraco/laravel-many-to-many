@@ -21,8 +21,10 @@
                     <div class="mt-3">
                         <div class="my-4">If you want to see all your projects click below <i class="fa-solid fa-arrow-down"></i></div>
                         <a href="{{ route('admin.projects.index') }}" class="btn btn-danger">Control Panel</a>
-                        <div class="my-4">If you want to see all your categories click here <i class="fa-solid fa-arrow-down"></i></div>
+                        <div class="my-4">If you want to see all your categories click below <i class="fa-solid fa-arrow-down"></i></div>
                         <a href="{{ route('admin.categories.index') }}" class="btn btn-danger">Control Panel</a>
+                        <div class="my-4">If you want to see all your technologies click below <i class="fa-solid fa-arrow-down"></i></div>
+                        <a href="{{ route('admin.technologies.index') }}" class="btn btn-danger">Control Panel</a>
                     </div>
                 </div>
             </div>
