@@ -15,7 +15,7 @@
                 <select name="technologies" id="technologies" class="form-select mb-3 w-25">
                     <option value="">All</option>
                     @foreach ($technologies as $technology)
-                        <option value="{{ $technology->id }}">{{ $technology->name }}</option>
+                        <option value="{{ $technology->name }}">{{ $technology->name }}</option>
                     @endforeach
                 </select>
             </div>

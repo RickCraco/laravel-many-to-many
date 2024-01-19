@@ -23,19 +23,12 @@ class ProjectController extends Controller
         $technologies = Technology::all();
 
         if($request->query('search')){
-            /*
-            $projects = Project::join('project_technology', 'projects.id', '=', 'project_technology.project_id')
-                ->join('technologies', 'project_technology.technology_id', '=', 'technologies.id')
-                ->where('technologies.name', 'like', '%' . $request->query('technologies') . '%')
-                ->get();
-                */
             $projects = Project::where('title', 'like', '%' . $request->query('search') . '%')->get();
         }elseif($request->query('technologies')){
           
-           $projects = Project::join('project_technology', 'projects.id', '=', 'project_technology.project_id')
-                ->join('technologies', 'technologies.id', '=', 'project_technology.technology_id')
-                ->where('technologies.id', 'like', '%' . $request->query('technologies') . '%')
-                ->get();
+           $projects = Project::whereHas('technologies', function($query) use ($request){
+               $query->where('name', 'like', '%' . $request->query('technologies') . '%');
+           })->get();
                 
         }else{
             $projects = Project::all();
