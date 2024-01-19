@@ -10,7 +10,13 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::all()->load(['category', 'technologies']);
         return response()->json($projects);
+    }
+
+    public function show(Project $project)
+    {
+        //$project = Project::where('id', $project->id)->with(['category', 'technologies'])->get();
+        return response()->json($project->load(['category', 'technologies']));
     }
 }
