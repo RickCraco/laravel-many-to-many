@@ -22,18 +22,26 @@ class ProjectController extends Controller
     {
         $technologies = Technology::all();
 
-        if($request->query('technologies')){
+        if($request->query('search')){
+            /*
             $projects = Project::join('project_technology', 'projects.id', '=', 'project_technology.project_id')
                 ->join('technologies', 'project_technology.technology_id', '=', 'technologies.id')
                 ->where('technologies.name', 'like', '%' . $request->query('technologies') . '%')
                 ->get();
-        }elseif($request->query('search')){
-           $projects = Project::where('title', 'like', '%' . $request->query('search') . '%')->get();
+                */
+            $projects = Project::where('title', 'like', '%' . $request->query('search') . '%')->get();
+        }elseif($request->query('technologies')){
+          
+           $projects = Project::join('project_technology', 'projects.id', '=', 'project_technology.project_id')
+                ->join('technologies', 'technologies.id', '=', 'project_technology.technology_id')
+                ->where('technologies.id', 'like', '%' . $request->query('technologies') . '%')
+                ->get();
+                
         }else{
             $projects = Project::all();
         }
         
-        return view('admin.projects.index', compact('projects', 'technologies'));
+        return view('admin.projects.index', compact('projects', 'technologies', 'request'));
     }
 
     /**
@@ -59,7 +67,7 @@ class ProjectController extends Controller
         $formData['user_id'] = $user_id;
 
         if($request->hasFile('img')){
-            $path = Storage::put('uploads', $request->file('img'));
+            $path = Storage::put('uploads', $formData['img']);
             $formData['img'] = $path;
         }
         /*
@@ -110,7 +118,7 @@ class ProjectController extends Controller
             if($project->img){
                 Storage::delete($project->img);
             }
-            $path = Storage::put('uploads', $request->file('img'));
+            $path = Storage::put('uploads', $request->img);
             $formData['img'] = $path;
         }
         /*

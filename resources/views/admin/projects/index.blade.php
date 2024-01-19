@@ -26,7 +26,7 @@
 
         <ul class="list-group my-3">
             <li class="list-group-item d-flex align-items-center justify-content-between bg-dark text-white">
-                <h3>Title</h3>
+                <h3>Project Title</h3>
                 <div class="d-flex">
                     <span class="mx-2 btn btn-primary">Show</span>
                     <span class="mx-2 btn btn-secondary">Edit</span>
